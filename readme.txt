@@ -7,9 +7,10 @@ spring-cloud-starter-hystrix-dashboard配置
 @EnableHystrixDashboard
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableCircuitBreaker
 @SpringBootApplication
 3) 使用@FeignClient注解中的fallback属性指定回调类
-@FeignClient(value = "compute-service", fallback = ComputeClientHystrix.class)
+@FeignClient(value = "COMPUTE-SERVICEA", fallback = ComputeClientHystrix.class)
 public interface ComputeClient {
     @RequestMapping(method = RequestMethod.GET, value = "/add")
     Integer add(@RequestParam(value = "a") Integer a, @RequestParam(value = "b") Integer b);
@@ -38,7 +39,12 @@ spring.application.name=feign-hystrix-consumer-dashboard
 server.port=3833
 eureka.client.serviceUrl.defaultZone=http://localhost:1111/eureka/
 
+7) 请求、设置仪表盘
+http://localhost:3833/hystrix/
+http://localhost:3833/hystrix.stream
+
 
 Feign增加断路器Hystrix/HystrixDashboard请求服务地址：
 http://10.5.2.241:3833/add
 http://localhost:3833/add
+
